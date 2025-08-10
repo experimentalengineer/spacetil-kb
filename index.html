@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spacetil Knowledge Base</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            border-bottom: 2px solid #000;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .admin-panel {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-panel h2 {
+            color: #000;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            background: #fff;
+            font-size: 1rem;
+            color: #000;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #000;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #333;
+        }
+
+        .btn-secondary {
+            background: #666;
+            margin-left: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: #888;
+        }
+
+        .btn-danger {
+            background: #000;
+            border: 1px solid #000;
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            font-size: 1.1rem;
+            background: #fff;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #000;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .article-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 1.5rem;
+            transition: border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            border-color: #000;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }
+
+        .article-excerpt {
+            color: #666;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .action-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .delete-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .article-view {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 2rem;
+            display: none;
+        }
+
+        .article-view h1 {
+            color: #000;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1rem;
+        }
+
+        .article-view .category {
+            background: #000;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .article-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #000;
+        }
+
+        .back-btn {
+            background: #666;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: #888;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .settings-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #000;
+            color: #fff;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: background 0.2s ease;
+        }
+
+        .settings-btn:hover {
+            background: #333;
+        }
+
+        .admin-logout {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #666;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .admin-logout:hover {
+            background: #888;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Spacetil Knowledge Base</h1>
+            <p>Complete guides for using the Spacetil platform</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalArticles">0</div>
+                <div class="stat-label">Total Articles</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCategories">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="recentArticles">0</div>
+                <div class="stat-label">Recent Articles</div>
+            </div>
+        </div>
+
+        <!-- Admin Logout Button (only visible when admin) -->
+        <button class="admin-logout hidden" id="adminLogoutBtn" onclick="adminLogout()">Admin Logout</button>
+
+        <!-- Settings Button (only visible when not admin) -->
+        <button class="settings-btn" id="settingsBtn" onclick="showAdminLogin()">⚙️</button>
+
+        <!-- Login Panel -->
+        <div class="admin-panel hidden" id="loginPanel">
+            <h2>Admin Login</h2>
+            <div class="form-group">
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" placeholder="Enter admin password..." onkeypress="handlePasswordEnter(event)">
+            </div>
+            <div>
+                <button class="btn" onclick="adminLogin()">Login as Admin</button>
+                <button class="btn btn-secondary" onclick="hideAdminLogin()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div class="admin-panel hidden" id="adminPanel">
+            <h2>Create/Edit Article</h2>
+            <div class="form-group">
+                <div class="form-row">
+                    <div>
+                        <label for="articleTitle">Article Title</label>
+                        <input type="text" id="articleTitle" placeholder="Enter article title...">
+                    </div>
+                    <div>
+                        <label for="articleCategory">Category</label>
+                        <select id="articleCategory">
+                            <option value="Account Setup">Account Setup</option>
+                            <option value="Banking">Banking</option>
+                            <option value="Vendors">Vendors</option>
+                            <option value="Payment Processing">Payment Processing</option>
+                            <option value="Credit Cards">Credit Cards</option>
+                            <option value="Getting Started">Getting Started</option>
+                            <option value="Troubleshooting">Troubleshooting</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="articleExcerpt">Short Description</label>
+                <textarea id="articleExcerpt" placeholder="Brief description of the article..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="articleContent">Article Content</label>
+                <textarea id="articleContent" placeholder="Write your article content here..." style="height: 250px;"></textarea>
+            </div>
+            <div>
+                <button class="btn" onclick="saveArticle()">Save Article</button>
+                <button class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
+                <input type="hidden" id="editingId" value="">
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchBox" placeholder="Search articles..." onkeyup="searchArticles()">
+        </div>
+
+        <!-- Articles Grid -->
+        <div id="articlesContainer">
+            <div class="articles-grid" id="articlesGrid">
+                <!-- Articles will be populated here -->
+            </div>
+        </div>
+
+        <!-- Article View -->
+        <div class="article-view" id="articleView">
+            <button class="back-btn" onclick="showArticlesList()">← Back to Articles</button>
+            <div id="articleViewContent">
+                <!-- Selected article content will be shown here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin authentication
+        const ADMIN_PASSWORD = "spacetil2024"; // Change this to your preferred password
+        let isAdmin = false;
+
+        // Check if already logged in
+        const savedAdminStatus = localStorage.getItem('spacetilAdminLoggedIn');
+        if (savedAdminStatus === 'true') {
+            isAdmin = true;
+        }
+
+        function showAdminLogin() {
+            document.getElementById('loginPanel').classList.remove('hidden');
+            document.getElementById('settingsBtn').classList.add('hidden');
+            document.getElementById('adminPassword').focus();
+        }
+
+        function hideAdminLogin() {
+            document.getElementById('loginPanel').classList.add('hidden');
+            document.getElementById('settingsBtn').classList.remove('hidden');
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function handlePasswordEnter(event) {
+            if (event.key === 'Enter') {
+                adminLogin();
+            }
+        }
+
+        function adminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                isAdmin = true;
+                localStorage.setItem('spacetilAdminLoggedIn', 'true');
+                updateUIForRole();
+                document.getElementById('adminPassword').value = '';
+                alert('Admin login successful!');
+            } else {
+                alert('Incorrect password');
+                document.getElementById('adminPassword').focus();
+            }
+        }
+
+        function adminLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                isAdmin = false;
+                localStorage.removeItem('spacetilAdminLoggedIn');
+                updateUIForRole();
+            }
+        }
+
+        function updateUIForRole() {
+            const loginPanel = document.getElementById('loginPanel');
+            const adminPanel = document.getElementById('adminPanel');
+            const editButtons = document.querySelectorAll('.article-actions');
+            const settingsBtn = document.getElementById('settingsBtn');
+            const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+            
+            if (isAdmin) {
+                loginPanel.classList.add('hidden');
+                adminPanel.classList.remove('hidden');
+                settingsBtn.classList.add('hidden');
+                adminLogoutBtn.classList.remove('hidden');
+                editButtons.forEach(btn => btn.style.display = 'flex');
+            } else {
+                loginPanel.classList.add('hidden');
+                adminPanel.classList.add('hidden');
+                settingsBtn.classList.remove('hidden');
+                adminLogoutBtn.classList.add('hidden');
+                editButtons.forEach(btn => btn.style.display = 'none');
+            }
+        }
+
+        // Initialize with articles based on your documents
+        let articles = [
+            {
+                id: 1,
+                title: "Connect Your Bank Accounts",
+                category: "Banking",
+                excerpt: "Learn how to securely connect your bank accounts to Spacetil for seamless financial management.",
+                content: `Setting up your bank accounts in Spacetil is essential for automated payment processing and financial tracking.
+
+**Before You Start**
+Make sure you have:
+- Your bank login credentials
+- Access to your online banking account
+- Permission to connect third-party applications
+
+**Step-by-Step Connection Process**
+
+1. **Navigate to Banking Settings**
+   - Go to Settings > Banking
+   - Click "Add Bank Account"
+
+2. **Select Your Bank**
+   - Choose from our list of supported banks
+   - Or select "Other" for manual setup
+
+3. **Secure Authentication**
+   - Enter your online banking credentials
+   - Complete any two-factor authentication
+   - Your credentials are encrypted and secure
+
+4. **Account Verification**
+   - Spacetil will verify your account
+   - This may take 1-2 business days
+   - You'll receive a confirmation email
+
+5. **Set Account Preferences**
+   - Choose which accounts to sync
+   - Set up automatic transaction import
+   - Configure account nicknames
+
+**Security & Privacy**
+- All connections use bank-level encryption
+- We never store your banking passwords
+- You can disconnect accounts anytime
+
+**Troubleshooting**
+If you experience connection issues:
+- Verify your bank credentials are correct
+- Check if your bank requires app authorization
+- Contact support for assistance`,
+                date: new Date().toLocaleDateString(),
+                author: "Spacetil Team"
+            },
+            {
+                id: 2,
+                title: "Add Vendor Contacts and Invite",
+                category: "Vendors",
+                excerpt: "Set up your vendor network and invite them to collaborate through the Spacetil platform.",
+                content: `Building a comprehensive vendor network in Spacetil streamlines your property management operations.
+
+**Adding Vendor Contacts**
+
+1. **Access Vendor Management**
+   - Navigate to Vendors > Add New Vendor
+   - Click "Create Vendor Profile"
+
+2. **Basic Information**
+   - Company name and contact person
+   - Phone number and email address
+   - Physical address and billing address
+   - Tax ID/Business license number
+
+3. **Service Categories**
+   - Select vendor specialties:
+     * Maintenance & Repairs
+     * Landscaping
+     * Cleaning Services
+     * Security
+     * Legal Services
+     * Accounting
+     * Insurance
+
+4. **Vendor Documentation**
+   - Upload insurance certificates
+   - Add business licenses
+   - Include W-9 forms
+   - Store contracts and agreements
+
+**Inviting Vendors to Spacetil**
+
+1. **Send Invitation**
+   - Click "Invite to Platform" on vendor profile
+   - Customize invitation message
+   - Include onboarding instructions
+
+2. **Vendor Portal Access**
+   - Vendors receive login credentials
+   - Access to submit invoices
+   - View work orders and schedules
+   - Update their profile information
+
+3. **Permission Settings**
+   - Set what vendors can view
+   - Control document access
+   - Manage communication preferences
+
+**Managing Vendor Relationships**
+- Track service history
+- Monitor performance ratings
+- Manage payment schedules
+- Store communication logs
+
+**Best Practices**
+- Keep vendor information updated
+- Regular performance reviews
+- Maintain insurance compliance
+- Document all interactions`,
+                date: new Date().toLocaleDateString(),
+                author: "Spacetil Team"
+            },
+            {
+                id: 3,
+                title: "Add Credit Cards to Spacetil",
+                category: "Credit Cards",
+                excerpt: "Securely add and manage credit cards for property-related expenses and automated payments.",
+                content: `Adding credit cards to Spacetil enables automated payments and streamlined expense tracking for your properties.
+
+**Supported Card Types**
+- Visa
+- Mastercard
+- American Express
+- Discover
+- Business credit cards
+- Debit cards with credit processing
+
+**Adding Your First Credit Card**
+
+1. **Navigate to Payment Methods**
+   - Go to Settings > Payment Methods
+   - Click "Add Credit Card"
+
+2. **Enter Card Information**
+   - Card number (encrypted automatically)
+   - Expiration date
+   - Security code (CVV)
+   - Cardholder name
+   - Billing address
+
+3. **Verification Process**
+   - Small authorization charge (refunded)
+   - Confirm charge amount
+   - Card is now verified and active
+
+4. **Set Card Preferences**
+   - Primary payment method
+   - Spending limits
+   - Notification settings
+   - Auto-pay configurations
+
+**Managing Multiple Cards**
+
+**Card Categories**
+- Operating expenses
+- Maintenance and repairs
+- Utilities
+- Emergency expenses
+- Capital improvements
+
+**Usage Controls**
+- Set monthly spending limits
+- Restrict to specific vendors
+- Require approval for large charges
+- Monitor real-time usage
+
+**Security Features**
+- PCI DSS compliant storage
+- Real-time fraud monitoring
+- Instant charge notifications
+- Easy card blocking/unblocking
+
+**Payment Automation**
+- Set up recurring payments
+- Automatic rent collection
+- Utility payment scheduling
+- Vendor payment processing
+
+**Expense Tracking**
+- Automatic categorization
+- Receipt matching
+- Tax reporting integration
+- Monthly spending summaries
+
+**Troubleshooting**
+- Declined charges
+- Expired card updates
+- Dispute management
+- Security alerts`,
+                date: new Date().toLocaleDateString(),
+                author: "Spacetil Team"
+            },
+            {
+                id: 4,
+                title: "Payment Setup",
+                category: "Payment Processing",
+                excerpt: "Configure comprehensive payment processing for rent collection, vendor payments, and automated transactions.",
+                content: `Spacetil's payment system handles all your property management financial transactions securely and efficiently.
+
+**Payment Processing Overview**
+
+**Rent Collection**
+- Online tenant payments
+- Automatic recurring charges
+- Late fee automation
+- Multiple payment options for tenants
+
+**Vendor Payments**
+- Invoice processing
+- Approval workflows
+- Scheduled payments
+- 1099 tax form generation
+
+**Operating Expenses**
+- Utility payments
+- Insurance premiums
+- Property taxes
+- Maintenance costs
+
+**Initial Payment Setup**
+
+1. **Configure Payment Gateway**
+   - Connect your merchant account
+   - Set processing preferences
+   - Configure fee structures
+   - Test payment processing
+
+2. **Set Up Rent Collection**
+   - Enable online rent payments
+   - Configure payment portal for tenants
+   - Set up automatic late fees
+   - Customize payment reminders
+
+3. **Vendor Payment Configuration**
+   - Set up approval hierarchies
+   - Configure payment schedules
+   - Enable invoice automation
+   - Set up tax reporting
+
+**Payment Methods Configuration**
+
+**For Rent Collection:**
+- Credit/debit cards
+- ACH bank transfers
+- Online banking
+- Mobile payments
+- Check processing
+
+**For Vendor Payments:**
+- ACH transfers
+- Business checks
+- Wire transfers
+- Corporate credit cards
+
+**Automation Features**
+
+**Recurring Payments**
+- Monthly rent collection
+- Utility payments
+- Insurance premiums
+- Loan payments
+
+**Smart Reminders**
+- Rent due notifications
+- Late payment alerts
+- Vendor payment schedules
+- Approval pending notices
+
+**Reporting & Analytics**
+- Payment success rates
+- Collection efficiency
+- Cash flow projections
+- Expense categorization
+
+**Security & Compliance**
+- PCI DSS compliance
+- Bank-level encryption
+- Fraud protection
+- Audit trails
+
+**Troubleshooting Common Issues**
+- Failed payment recovery
+- Dispute management
+- Refund processing
+- Payment reconciliation`,
+                date: new Date().toLocaleDateString(),
+                author: "Spacetil Team"
+            }
+        ];
+
+        // Load articles from localStorage if available
+        const savedArticles = localStorage.getItem('spacetilKBArticles');
+        if (savedArticles) {
+            articles = JSON.parse(savedArticles);
+        }
+
+        let editingArticleId = null;
+
+        function saveArticlesToStorage() {
+            localStorage.setItem('spacetilKBArticles', JSON.stringify(articles));
+        }
+
+        function generateId() {
+            return Math.max(...articles.map(a => a.id), 0) + 1;
+        }
+
+        function updateStats() {
+            document.getElementById('totalArticles').textContent = articles.length;
+            
+            const categories = [...new Set(articles.map(a => a.category))];
+            document.getElementById('totalCategories').textContent = categories.length;
+            
+            const today = new Date().toLocaleDateString();
+            const recentArticles = articles.filter(a => a.date === today).length;
+            document.getElementById('recentArticles').textContent = recentArticles;
+        }
+
+        function renderArticles(articlesToRender = articles) {
+            const grid = document.getElementById('articlesGrid');
+            
+            if (articlesToRender.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 2rem;">No articles found. Create your first article above!</div>';
+                return;
+            }
+            
+            grid.innerHTML = articlesToRender.map(article => `
+                <div class="article-card" onclick="viewArticle(${article.id})">
+                    <div class="article-category">${article.category}</div>
+                    <div class="article-title">${article.title}</div>
+                    <div class="article-excerpt">${article.excerpt}</div>
+                    <div class="article-meta">
+                        <span>By ${article.author} • ${article.date}</span>
+                        <div class="article-actions" onclick="event.stopPropagation()">
+                            <button class="action-btn" onclick="editArticle(${article.id})">Edit</button>
+                            <button class="action-btn delete-btn" onclick="deleteArticle(${article.id})">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveArticle() {
+            const title = document.getElementById('articleTitle').value;
+            const category = document.getElementById('articleCategory').value;
+            const excerpt = document.getElementById('articleExcerpt').value;
+            const content = document.getElementById('articleContent').value;
+            
+            if (!title || !excerpt || !content) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const articleData = {
+                title,
+                category,
+                excerpt,
+                content,
+                date: new Date().toLocaleDateString(),
+                author: 'Spacetil Admin'
+            };
+            
+            if (editingArticleId) {
+                // Update existing article
+                const index = articles.findIndex(a => a.id === editingArticleId);
+                articles[index] = { ...articles[index], ...articleData };
+                editingArticleId = null;
+            } else {
+                // Create new article
+                articleData.id = generateId();
+                articles.unshift(articleData);
+            }
+            
+            saveArticlesToStorage();
+            clearForm();
+            renderArticles();
+            updateStats();
+            
+            alert('Article saved successfully!');
+        }
+
+        function editArticle(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+            
+            document.getElementById('articleTitle').value = article.title;
+            document.getElementById('articleCategory').value = article.category;
+            document.getElementById('articleExcerpt').value = article.excerpt;
+            document.getElementById('articleContent').value = article.content;
+            document.getElementById('editingId').value = id;
+            
+            editingArticleId = id;
+            
+            // Scroll to admin panel
+            document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function deleteArticle(id) {
+            if (confirm('Are you sure you want to delete this article?')) {
+                articles = articles.filter(a => a.id !== id);
+                saveArticlesToStorage();
+                renderArticles();
+                updateStats();
+            }
+        }
+
+        function cancelEdit() {
+            clearForm();
+            editingArticleId = null;
+        }
+
+        function clearForm() {
+            document.getElementById('articleTitle').value = '';
+            document.getElementById('articleCategory').value = 'Account Setup';
+            document.getElementById('articleExcerpt').value = '';
+            document.getElementById('articleContent').value = '';
+            document.getElementById('editingId').value = '';
+        }
+
+        function viewArticle(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+            
+            document.getElementById('articleViewContent').innerHTML = `
+                <div class="category">${article.category}</div>
+                <h1>${article.title}</h1>
+                <div style="color: #999; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #eee;">
+                    By ${article.author} • ${article.date}
+                </div>
+                <div class="article-content">${article.content.replace(/\n/g, '<br>')}</div>
+            `;
+            
+            document.getElementById('articlesContainer').style.display = 'none';
+            document.getElementById('articleView').style.display = 'block';
+        }
+
+        function showArticlesList() {
+            document.getElementById('articlesContainer').style.display = 'block';
+            document.getElementById('articleView').style.display = 'none';
+        }
+
+        function searchArticles() {
+            const query = document.getElementById('searchBox').value.toLowerCase();
+            
+            if (!query) {
+                renderArticles();
+                return;
+            }
+            
+            const filteredArticles = articles.filter(article => 
+                article.title.toLowerCase().includes(query) ||
+                article.content.toLowerCase().includes(query) ||
+                article.category.toLowerCase().includes(query) ||
+                article.excerpt.toLowerCase().includes(query)
+            );
+            
+            renderArticles(filteredArticles);
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUIForRole();
+            renderArticles();
+            updateStats();
+        });
+    </script>
+</body>
+</html>
